@@ -1,0 +1,1 @@
+1) Firabase kurulumları yapıldı. Kayıt ve giriş ekranları tasarlandı ve kodlandı. Kullanıcılar artık kayıt olup giriş yapabiliyor.
