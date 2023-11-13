@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "76079204637",
+    "project_id": "rating-app-flutter",
+    "storage_bucket": "rating-app-flutter.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:76079204637:android:d87fc30d7f6fb96833b9f4",
+        "android_client_info": {
+          "package_name": "com.example.rating_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA8hvZPVGUveTq1ZdZC2qu0a_xPUR_-0fo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
