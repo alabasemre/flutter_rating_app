@@ -1,6 +1,7 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'package:rating_app/firebase/auth_methods.dart';
+import 'package:rating_app/pages/main_page.dart';
 import 'package:rating_app/styles/app_colors.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -26,17 +27,15 @@ class _LoginPageState extends State<LoginPage> {
     UserCredential user = await AuthMethods()
         .signInUser(_emailController.text, _passwordController.text);
 
-    // main page will be designed
-    // if (user.user != null) {
-    //   Navigator.of(context).pushReplacementNamed("/main");
-    // }
+    if (user.user != null) {
+      Navigator.of(context).pushReplacementNamed("/main");
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     if (FirebaseAuth.instance.currentUser != null) {
-      // TO DO: if user already logged in redirect to main page
-      return const Center(child: Text("Main Page"));
+      return const MainPage();
     }
     return SafeArea(
       child: Scaffold(

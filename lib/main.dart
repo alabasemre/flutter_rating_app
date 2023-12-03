@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:rating_app/pages/home_page.dart';
 import 'package:rating_app/pages/login_page.dart';
+import 'package:rating_app/pages/main_page.dart';
+import 'package:rating_app/pages/profile_page.dart';
 import 'package:rating_app/pages/signup_page.dart';
 import 'package:rating_app/styles/app_colors.dart';
 import 'firebase_options.dart';
@@ -27,6 +30,9 @@ class MainApp extends StatelessWidget {
       routes: {
         '/': (context) => const LoginPage(),
         '/signup': (context) => const SignUpPage(),
+        '/home': (context) => const HomePage(),
+        '/profile': (context) => const ProfilePage(),
+        '/main': (context) => const MainPage(),
       },
     );
   }
