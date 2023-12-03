@@ -101,7 +101,8 @@ class _ProfilePageState extends State<ProfilePage> {
                     if (userRole == "admin")
                       ElevatedButton(
                           onPressed: () {
-                            // todo: go to list product page
+                            Navigator.pushNamed(context, '/admin',
+                                arguments: {"action": "list"});
                           },
                           style: ElevatedButton.styleFrom(
                               backgroundColor: AppColors.primaryBg,
@@ -113,7 +114,8 @@ class _ProfilePageState extends State<ProfilePage> {
                     if (userRole == "admin")
                       ElevatedButton(
                           onPressed: () {
-                            //todo go to add product
+                            Navigator.pushNamed(context, '/admin',
+                                arguments: {"action": "add"});
                           },
                           style: ElevatedButton.styleFrom(
                               backgroundColor: AppColors.primaryBg,

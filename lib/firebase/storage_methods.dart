@@ -19,4 +19,24 @@ class StorageMethods {
     String downloadUrl = await snapshot.ref.getDownloadURL();
     return downloadUrl;
   }
+
+  Future<String> uploadProductImageToStorage(
+      String childName, File file) async {
+    // creating location to our firebase storage
+
+    Reference ref =
+        _storage.ref().child(childName).child(file.hashCode.toString());
+
+    // putting in uint8list format -> Upload task like a future but not future
+    UploadTask uploadTask = ref.putFile(file);
+
+    TaskSnapshot snapshot = await uploadTask;
+    String downloadUrl = await snapshot.ref.getDownloadURL();
+    return downloadUrl;
+  }
+
+  Future<void> deleteImageFromStorage(String childName, String uid) async {
+    Reference ref = _storage.ref().child(childName).child(uid);
+    await ref.delete();
+  }
 }

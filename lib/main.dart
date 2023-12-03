@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:rating_app/pages/admin_main_page.dart';
 import 'package:rating_app/pages/home_page.dart';
 import 'package:rating_app/pages/login_page.dart';
 import 'package:rating_app/pages/main_page.dart';
@@ -33,6 +34,7 @@ class MainApp extends StatelessWidget {
         '/home': (context) => const HomePage(),
         '/profile': (context) => const ProfilePage(),
         '/main': (context) => const MainPage(),
+        '/admin': (context) => const AdminMainPage(),
       },
     );
   }
