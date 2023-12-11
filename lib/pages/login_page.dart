@@ -23,13 +23,28 @@ class _LoginPageState extends State<LoginPage> {
     _emailController.dispose();
   }
 
-  void signInUser() async {
-    UserCredential user = await AuthMethods()
-        .signInUser(_emailController.text, _passwordController.text);
+  void signInUser(BuildContext context) async {
+    try {
+      UserCredential user = await AuthMethods()
+          .signInUser(_emailController.text, _passwordController.text);
 
-    if (user.user != null) {
-      Navigator.of(context).pushReplacementNamed("/main");
+      if (user.user != null) {
+        Navigator.of(context).pushReplacementNamed("/main");
+      }
+    } catch (e) {
+      _showToast(context, "Invalid credentials");
     }
+  }
+
+  void _showToast(BuildContext context, String text) {
+    final scaffold = ScaffoldMessenger.of(context);
+    scaffold.showSnackBar(
+      SnackBar(
+        content: Text(text),
+        action: SnackBarAction(
+            label: 'Kapat', onPressed: scaffold.hideCurrentSnackBar),
+      ),
+    );
   }
 
   @override
@@ -154,7 +169,7 @@ class _LoginPageState extends State<LoginPage> {
                   elevation: 0.0,
                   shadowColor: Colors.transparent),
               onPressed: () {
-                signInUser();
+                signInUser(context);
               },
               child: const Text(
                 "Giriş Yap",

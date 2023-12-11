@@ -143,4 +143,59 @@ class FireStoreMethods {
 
     return products;
   }
+
+  Future<dynamic> getUserRated(String uid) async {
+    var snapshot = await _firestore.collection("users").doc(uid).get();
+    var data = snapshot.data();
+
+    Map<String, dynamic> userRated = data!["rated"];
+
+    return userRated;
+  }
+
+  Future<Map<String, Object>> rateProduct(
+      String productId, String uid, int rate) async {
+    var res = {
+      "error": false,
+      "errorMessage": "",
+      "success": false,
+      "isRated": 0,
+      "newReview": 0,
+    };
+    try {
+      await _firestore.collection("users").doc(uid).update({
+        "rated.$productId": rate,
+      });
+
+      var productDoc =
+          await _firestore.collection("products").doc(productId).get();
+
+      var isRated = productDoc.data()!["rates"][uid];
+
+      if (isRated == null) {
+        await _firestore.collection("products").doc(productId).update({
+          "rates.$uid": rate,
+          "review": FieldValue.increment(1),
+          "score": FieldValue.increment(rate),
+        });
+
+        // res["isRated"] = rate;
+        // res["newReview"] = 1;
+      } else {
+        int oldRate = isRated;
+        int newRate = rate - oldRate;
+
+        await _firestore.collection("products").doc(productId).update(
+            {"rates.$uid": rate, "score": FieldValue.increment(newRate)});
+
+        // res["isRated"] = newRate;
+      }
+
+      res["success"] = true;
+    } catch (e) {
+      res["error"] = true;
+      res["errorMessage"] = e.toString();
+    }
+    return res;
+  }
 }

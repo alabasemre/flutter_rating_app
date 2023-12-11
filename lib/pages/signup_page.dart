@@ -1,8 +1,9 @@
-// ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
+// ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors, use_build_context_synchronously
 
 import 'package:rating_app/firebase/auth_methods.dart';
 import 'package:rating_app/styles/app_colors.dart';
 import 'package:flutter/material.dart';
+import 'package:rating_app/pages/main_page.dart';
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({super.key});
@@ -25,19 +26,34 @@ class _SignUpPageState extends State<SignUpPage> {
     _usernameController.dispose();
   }
 
-  void signUpUser() async {
-    await AuthMethods().signUpUser(_emailController.text,
-        _passwordController.text, _usernameController.text);
+  void signUpUser(BuildContext context) async {
+    try {
+      await AuthMethods().signUpUser(_emailController.text,
+          _passwordController.text, _usernameController.text);
 
-    setState(() {
-      _isSigned = true;
-    });
+      setState(() {
+        _isSigned = true;
+      });
+    } catch (e) {
+      _showToast(context, "Invalid credentials");
+    }
+  }
+
+  void _showToast(BuildContext context, String text) {
+    final scaffold = ScaffoldMessenger.of(context);
+    scaffold.showSnackBar(
+      SnackBar(
+        content: Text(text),
+        action: SnackBarAction(
+            label: 'Kapat', onPressed: scaffold.hideCurrentSnackBar),
+      ),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     return _isSigned
-        ? Center(child: Text("Main Page"))
+        ? MainPage()
         : SafeArea(
             child: Scaffold(
                 body: SingleChildScrollView(
@@ -212,13 +228,7 @@ class _SignUpPageState extends State<SignUpPage> {
                             elevation: 0.0,
                             shadowColor: Colors.transparent),
                         onPressed: () {
-                          // Navigator.of(context)
-                          //     .push(MaterialPageRoute(builder: (context) {
-                          //   return HomePage();
-                          // }));
-
-                          // Navigator.of(context).pushReplacementNamed('/main');
-                          signUpUser();
+                          signUpUser(context);
                         },
                         child: Text(
                           "Kayıt Ol",
