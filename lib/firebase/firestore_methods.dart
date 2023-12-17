@@ -153,6 +153,71 @@ class FireStoreMethods {
     return userRated;
   }
 
+  Future<dynamic> getUserRatedProducts(
+      String uid, Map<String, dynamic> userRated) async {
+    List<String> ratedProducts = [];
+
+    for (var element in userRated.keys) {
+      ratedProducts.add(element.toString());
+    }
+
+    var snapshot = await _firestore
+        .collection("products")
+        .where(FieldPath.documentId, whereIn: ratedProducts)
+        .get();
+
+    var products = [];
+
+    for (var docSnap in snapshot.docs) {
+      var data = docSnap.data();
+      int reviewCount = data["review"];
+      double score = 0;
+      if (reviewCount > 0) {
+        score = data["score"] / reviewCount;
+      }
+
+      products.add({
+        "productId": docSnap.id,
+        "productName": data["productName"],
+        "productImage": data["url"],
+        "productReviewCount": reviewCount,
+        "productDetail": data["productDetail"],
+        "productScore": score,
+        "productImageName": data["imageName"],
+        "rates": data["rates"]
+      });
+    }
+
+    return products;
+  }
+
+  Future<dynamic> getSingle(String productId, String uid) async {
+    var snapshot = await _firestore.collection("products").doc(productId).get();
+    Map<String, dynamic> product = {};
+
+    var data = snapshot.data();
+
+    if (data != null) {
+      int reviewCount = data["review"];
+      double score = 0;
+      if (reviewCount > 0) {
+        score = data["score"] / reviewCount;
+      }
+
+      product = {
+        "productId": productId,
+        "productName": data["productName"],
+        "productImage": data["url"],
+        "productReviewCount": reviewCount,
+        "productDetail": data["productDetail"],
+        "productScore": score,
+        "rated": data["rates"][uid] ?? 0
+      };
+    }
+
+    return product;
+  }
+
   Future<Map<String, Object>> rateProduct(
       String productId, String uid, int rate) async {
     var res = {

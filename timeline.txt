@@ -2,3 +2,4 @@
 2) Routing yapısına anasayfa, notladım ve profili ekledim. Kullanıcı artık profil sayfasından profil resmini değişebiliyor ve bilgilerini görebiliyor.
 3) Yetkisi olan kullanıcılar profil sayfası üzerinden ürün işlemlerine erişim sağlayabiliyor. Ürün ekleme, silme ve güncelleme işlemleri çalışıyor.
 4) Ürünler anasayfada listelendi. Artık ürünlere 1-5 arası puan verilebiliyor.
+5) Kullanıcılar notladım sayfasında notladıkları ürünleri listeyebiliyor ve artık ürün detaylarına erişim sağlayabiliyor.

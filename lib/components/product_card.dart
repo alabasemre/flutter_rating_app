@@ -71,7 +71,10 @@ class _ProductCardState extends State<ProductCard> {
                 )
               : InkWell(
                   onTap: () {
-                    // TODO: go to product detail page
+                    Navigator.pushNamed(context, '/productDetail', arguments: {
+                      "productId": widget.productId,
+                      "updateList": widget.updateList
+                    });
                   },
                   child: Row(
                     children: [
